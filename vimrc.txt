@@ -1,0 +1,11 @@
+" .vimrc
+" Author: Yang Zhou
+" Date: 19/05/21
+
+"======================
+"   General Settings
+"======================
+set nu
+syntax on
+set encoding=utf-8
+set fileencoding=utf-8

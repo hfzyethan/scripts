@@ -1,4 +1,4 @@
-#!/usr/bin/expect
+#!/usr/bin/env expect
 
 ##################################################
 #              安装 expect
@@ -8,7 +8,7 @@
 ##################################################
 
 # 设置超时时间 3 秒
-set timeout 3
+set timeout 10
 
 # fork一个子进程执行 ssh
 spawn ssh user_name@ip

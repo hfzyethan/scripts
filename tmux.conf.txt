@@ -1,0 +1,43 @@
+# tmux config
+# tmux version > 2.1
+
+# Setting the PREFIX from C-b to C-a
+set-option -g prefix2 C-a
+
+# Free the original Ctrl-b prefix keybinding
+unbind-key C-b
+
+# Ensure that we can send Ctrl-A to other apps
+bind-key C-a send-prefix -2
+
+set -wg allow-rename off                                                            
+set -wg automatic-rename off
+
+# Set the delay between prefix and command
+set -s escape-time 1
+
+# Set the base index for windows to 1 instead of 0
+# set -g base-index 1
+
+# Set the base index for panes to 1 instead of 0
+# set -g pane-base-index 1
+
+# Use Alt-arrow keys to switch panes
+bind -r -n M-Left select-pane -L
+bind -r -n M-Right select-pane -R
+bind -r -n M-Up select-pane -U
+bind -r -n M-Down select-pane -D
+
+# Use Shift-arrow keys to switch windows
+bind -n S-Left previous-window
+bind -n S-Right next-window
+
+# Mouse mode
+set -g mouse on
+
+# Set easier windows split keys
+bind-key v split-window -h
+bind-key h split-window -v
+
+# Bind PREFIX r to reload conf file
+bind-key r source-file ~/.tmux.conf \; display "tmux config reloaded!"

@@ -134,12 +134,9 @@ do_install(){
     fi
     offline_install
 
-    # create service file only
-    create_service_file_only
-
     # create service and socket file
-    # create_socket_file
-    # create_service_file
+    create_socket_file
+    create_service_file
 
     systemctl daemon-reload
     systemctl enable docker.service

@@ -30,10 +30,10 @@ check_system(){
 
 check_file(){
     local binary_file=$1
-    if [ ! -e binary_file ]; then
+    if [ ! -e $binary_file ]; then
         echo "docker binary file ${binary_file} does not exist!\n"
         exit 1
-    elif [ ! -f binary_file ]; then
+    elif [ ! -f $binary_file ]; then
         echo "${binary_file} is not a file.\n"
         exit 1
     fi
@@ -60,7 +60,9 @@ get_full_path(){
 }
 
 create_service_file(){
-    mkdir -p > /usr/lib/systemd/system
+    if [ ! -d /usr/lib/systemd/system ]; then
+        mkdir -p /usr/lib/systemd/system
+    fi
     cat > /usr/lib/systemd/system/docker.service << EOF
 [Unit]
 Description=Docker Application Container Engine
@@ -100,7 +102,9 @@ EOF
 }
 
 create_socket_file(){
-    mkdir -p > /usr/lib/systemd/system
+    if [ ! -d /usr/lib/systemd/system ]; then
+        mkdir -p /usr/lib/systemd/system
+    fi
     cat > /usr/lib/systemd/system/docker.socket << EOF
 [Unit]
 Description=Docker Socket for the API
@@ -120,7 +124,9 @@ EOF
 }
 
 create_service_file_only(){
-    mkdir -p > /usr/lib/systemd/system
+    if [ ! -d /usr/lib/systemd/system ]; then
+        mkdir -p /usr/lib/systemd/system
+    fi
     cat > /usr/lib/systemd/system/docker.service << EOF
 [Unit]
 Description=Docker Application Container Engine

@@ -166,6 +166,7 @@ do_install(){
     task=$1
     if [ $task == "online" ]; then
         online_install
+    fi
     offline_install
 
     # create service file only

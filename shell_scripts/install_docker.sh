@@ -1,18 +1,19 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 ###################################
 # 1. install docker-ce
 # 2. write service
 # 3. start docker service
-# 4. install bash-completion
+# 4. install bash-completion <optional>
 ###################################
 
 usage(){
-    echo "Usage: $0 docker_binary.tgz"
-    echo "eg:    $0 docker-19.03.3.tgz"
+    echo "Usage: $0 [-f docker_tgz_file] [-t offline]"
+    echo "eg:    sudo bash $0 -f docker-19.03.3.tgz -t offline"
+    echo "------------------------------"
     echo "Get docker-ce binary from: https://download.docker.com/linux/static/stable/"
     echo "choose your hardware platform and download the .tgz file relating to the version of Docker Engine."
-    echo "eg: wget https://download.docker.com/linux/static/stable/x86_64/docker-19.03.4.tgz"
+    echo "eg:  wget https://download.docker.com/linux/static/stable/x86_64/docker-19.03.4.tgz"
     echo ""
 }
 
@@ -189,12 +190,12 @@ do_install(){
     echo "`docker --version` success installed.\n"
 }
 
-online_install(){}
+# online_install(){}
 
 offline_install(){
     local current_path=`pwd`
     cd $DOCKER_FILE_PATH
-    tar xzvpf $DOCKER_FILE_NAME
+    tar xzpf $DOCKER_FILE_NAME
     cp -rf docker/* /usr/bin/
     rm -rf docker/
     cd $current_path
@@ -202,7 +203,7 @@ offline_install(){
 
 # install_bash_completion(){}
 
-auto_install(){}
+# auto_install(){}
 
 # get all parameters
 while [ $# > 0 ]; do
@@ -211,24 +212,19 @@ while [ $# > 0 ]; do
         -f|--file)
             DOCKER_TGZ_FILE="$2"
             check_file $DOCKER_TGZ_FILE
-            shift
+            shift 2
             ;;
         -t|--task)
             task="$2"
             do_install $task
-            shift
+            shift 2
             ;;
         -h|--help)
-            echo "$0 [-f file] [-t offline] [-h]"
-            echo "    -f, --file=[file path]    docker binary tgz file path"
-            echo "    -t, --task                online or offline"
-            echo "    -h, --help                show help"
-            echo ""
-            exit 0
-            shift
+            usage
+            exit 1
             ;;
         *)
+            exit 1
             ;;
     esac
-    shift
 done

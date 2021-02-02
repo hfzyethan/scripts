@@ -1,5 +1,4 @@
-
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -u
 
@@ -13,12 +12,13 @@ cask_app_list=(
   qq # QQ
   wechat # 微信
   youdaodict # 有道词典
+  youdaonote # 有道云笔记
   xmind # 思维导图
   visual-studio-code # VSCode编辑器
   postman # API测试工具
   cheatsheet # 应用快捷键提示
   neteasemusic # 网易云音乐
-  yinxiangbiji # 印象笔记（非国际版，国际版是evernote）
+  # yinxiangbiji # 印象笔记（非国际版，国际版是evernote）
   baidunetdisk # 百度网盘
   sequel-pro # 数据库管理软件（MySQL）
   iina # 视频播放

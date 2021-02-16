@@ -1,0 +1,62 @@
+version: "3"
+
+services: 
+
+  ubuntu:
+    build: services/ubuntu-18.04
+    container_name: ubuntu18
+    restart: always
+    volumes:
+      - ./projects/ubuntu/home/zy:/home/zy
+    # 需要改变 security_opt， 不然 gdb server 会跑不起来
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - 36000:36000
+    # 开启 ssh 服务，这样 clion 就能通过 ssh 连接进来了
+    # 同时通过 tail -f 命令保持 container 不要退出的状态
+    command: bash -c "service ssh restart && tail -f /dev/null"
+    networks:
+      - devnet
+    depends_on:
+      - redis
+  
+  # mysql 镜像没有arm64架构的
+  mysql:
+    build: services/mysql-5.7
+    container_name: mysql57
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    volumes:
+      - ./projects/mysql/mysql.conf.d/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+      - ./projects/mysql/data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - devnet
+
+  redis:
+    image: redis:5.0
+    # build: services/redis-5.0
+    container_name: redis5
+    restart: always
+    volumes:
+      - ./projects/redis/conf/redis.conf:/etc/redis/redis.conf
+      - ./projects/redis/data:/data
+    ports:
+      - 6379:6379
+    command: /bin/bash -c "redis-server /etc/redis/redis.conf"
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=en_US.UTF-8
+    networks:
+      - devnet
+
+networks:
+  devnet:
+    driver: bridge
+    # ipam:
+    #   driver: default
+    #   config:
+    #     - subnet: 172.129.2.0/24

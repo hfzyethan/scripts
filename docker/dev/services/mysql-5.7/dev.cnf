@@ -1,0 +1,17 @@
+[mysqld]
+lower_case_table_names=1
+character_set_server = utf8
+collation_server = utf8_general_ci
+innodb_lock_wait_timeout = 50
+innodb_rollback_on_timeout = on
+innodb_large_prefix = 0 
+wait_timeout = 7200
+interactive_timeout = 7200
+explicit_defaults_for_timestamp = true
+max-allowed-packet = 1024M
+sql_mode = "NO_ENGINE_SUBSTITUTION,NO_AUTO_CREATE_USER"
+transaction-isolation = "READ-COMMITTED"
+max-connections = 512
+
+[mysql]
+default-character-set=utf8

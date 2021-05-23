@@ -27,7 +27,6 @@ fi
 
 # 4. 替换上游，使用中科大源
 git -C "$(brew --repo)" remote set-url origin https://mirrors.ustc.edu.cn/brew.git
-
 BREW_TAPS="$(brew tap)"
 for tap in core cask{,-versions}; do
     if echo "$BREW_TAPS" | grep -qE "^homebrew/${tap}\$"; then
@@ -40,5 +39,5 @@ for tap in core cask{,-versions}; do
     fi
 done
 
-echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles' >> ~/.zshrc
+echo "export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles" >> ~/.zshrc
 source ~/.zshrc

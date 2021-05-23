@@ -8,20 +8,19 @@ services:
     restart: always
     volumes:
       - ./projects/ubuntu/home/zy:/home/zy
-    # 需要改变 security_opt， 不然 gdb server 会跑不起来
+    # 需要改变security_opt， 不然gdb server运行不起来
     security_opt:
       - seccomp:unconfined
     ports:
       - 36000:36000
-    # 开启 ssh 服务，这样 clion 就能通过 ssh 连接进来了
-    # 同时通过 tail -f 命令保持 container 不要退出的状态
+    # 开启ssh服务，这样Clion就能通过ssh连接
+    # 同时通过tail命令保持容器不要退出的状态
     command: bash -c "service ssh restart && tail -f /dev/null"
     networks:
       - devnet
     depends_on:
       - redis
   
-  # mysql 镜像没有arm64架构的
   mysql:
     build: services/mysql-5.7
     container_name: mysql57
@@ -37,8 +36,7 @@ services:
       - devnet
 
   redis:
-    image: redis:5.0
-    # build: services/redis-5.0
+    build: services/redis-5.0
     container_name: redis5
     restart: always
     volumes:
@@ -55,8 +53,4 @@ services:
 
 networks:
   devnet:
-    driver: bridge
-    # ipam:
-    #   driver: default
-    #   config:
-    #     - subnet: 172.129.2.0/24
+    driver: host

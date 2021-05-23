@@ -39,5 +39,5 @@ for tap in core cask{,-fonts,-drivers,-versions}; do
     fi
 done
 
-echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles' >> ~/.zshrc
+echo "export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles" >> ~/.zshrc
 source ~/.zshrc
